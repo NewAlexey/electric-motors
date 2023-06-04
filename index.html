@@ -2,12 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Electrical Motor Schemas</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main class="container">
+      <div id="settings">
+        <form class="form-settings">
+          <label for="slot">
+            Количество Пазов
+            <input id="slot" type="number" value="10"/>
+          </label>
+
+          <label for="lamella">
+            Количество Ламелей
+            <input id="lamella" type="number" value="20"/>
+          </label>
+
+          <label for="lamella-position">
+            Расположение ламелей
+            <select id="lamella-position">
+              <option value="combined">Совмещены</option>
+              <option value="notCombined">Не Совмещены</option>
+            </select>
+          </label>
+
+          <label for="winding-direction">
+            Направление намотки
+            <select id="winding-direction">
+              <option value="direct">Прямое</option>
+              <option value="reverse">Обратное</option>
+            </select>
+          </label>
+
+          <label for="wiring-direction">
+            Направление разводки
+            <select id="wiring-direction">
+              <option value="right">Правое</option>
+              <option value="left">Левое</option>
+            </select>
+          </label>
+
+        </form>
+      </div>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
