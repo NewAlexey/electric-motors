@@ -1,13 +1,17 @@
 import "./styles/normalize.css";
 import "./styles/style.css";
+
 import {
     LamellaPositionType,
     SelectedSettingsType,
+    SettingsFieldType,
+    SettingsValueType,
     WindingDirectionType,
     WiringDirectionType,
 } from "./types.ts";
+import { Schema } from "./schema/schema.ts";
 
-const SETTING_ELEMENTS_IDS = {
+const SETTING_ELEMENTS_IDS: Record<SettingsFieldType, string> = {
     slot: "slot",
     lamella: "lamella",
     lamellaPosition: "lamella-position",
@@ -25,6 +29,8 @@ class ElectricalMotorWiring {
     private readonly WIRING_DIRECTION_ELEMENT_ID =
         SETTING_ELEMENTS_IDS.wiringDirection;
 
+    private readonly schema: Schema = new Schema();
+
     private selectedSettings: SelectedSettingsType = {
         slot: "0",
         lamella: "0",
@@ -40,13 +46,18 @@ class ElectricalMotorWiring {
     public start() {
         this.setInitialSelectedSettings();
         this.addEventListenersToElement();
+        this.drawSchema();
+    }
+
+    private drawSchema() {
+        this.schema.drawSchema(this.getSettingsValue());
     }
 
     private addEventListenersToElement() {
-        const entries = Object.entries(SETTING_ELEMENTS_IDS);
+        const entries = Object.entries<SettingsValueType>(SETTING_ELEMENTS_IDS);
 
         entries.forEach((entry) => {
-            const field = entry[0] as keyof SelectedSettingsType;
+            const field = entry[0] as SettingsFieldType;
             const id = entry[1];
 
             const element = this.getElementById<
@@ -58,18 +69,17 @@ class ElectricalMotorWiring {
                     event.target instanceof HTMLInputElement ||
                     event.target instanceof HTMLSelectElement
                 ) {
-                    //TODO remove ts ignore
-                    // @ts-ignore
-                    this.selectedSettings[field] = event.target.value as
-                        | string
-                        | LamellaPositionType
-                        | WindingDirectionType
-                        | WiringDirectionType;
+                    this.selectedSettings[field] = event.target
+                        .value as SettingsValueType;
 
-                    console.log("selectedValue", this.selectedSettings);
+                    this.drawSchema();
                 }
             });
         });
+    }
+
+    private getSettingsValue() {
+        return this.selectedSettings;
     }
 
     private setInitialSelectedSettings() {

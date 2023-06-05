@@ -2,10 +2,17 @@ export type LamellaPositionType = "combined" | "notCombined";
 export type WindingDirectionType = "direct" | "reverse";
 export type WiringDirectionType = "right" | "left";
 
-export type SelectedSettingsType = {
-    slot: string;
-    lamella: string;
-    lamellaPosition: LamellaPositionType;
-    windingDirection: WindingDirectionType;
-    wiringDirection: WiringDirectionType;
-};
+export type SettingsFieldType =
+    | "slot"
+    | "lamella"
+    | "lamellaPosition"
+    | "windingDirection"
+    | "wiringDirection";
+
+export type SettingsValueType =
+    | string
+    | LamellaPositionType
+    | WindingDirectionType
+    | WiringDirectionType;
+
+export type SelectedSettingsType = Record<SettingsFieldType, SettingsValueType>;
