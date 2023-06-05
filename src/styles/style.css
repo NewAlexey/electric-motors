@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #7a7a7a;
+  background-color: #b3b3b3;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,4 +30,9 @@ body {
 
 .form-settings {
   display: flex;
+}
+
+input, select {
+  padding: 5px 10px;
+  margin: 5px;
 }
