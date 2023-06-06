@@ -1,0 +1,13 @@
+$lamellaWidth: 25px;
+$lamellaHeight: 45px;
+$lamellaMainColour: #ffca00;
+$lamellaContainerWidth: 80%;
+$lamellaContainerHeight: 90%;
+
+:export {
+  lamellaWidth: $lamellaWidth;
+  lamellaHeight: $lamellaHeight;
+  lamellaMainColour: $lamellaMainColour;
+  lamellaContainerWidth: $lamellaContainerWidth;
+  lamellaContainerHeight: $lamellaContainerHeight;
+}

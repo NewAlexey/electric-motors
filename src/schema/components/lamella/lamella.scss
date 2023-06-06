@@ -1,0 +1,31 @@
+@import "variables";
+
+#lamella__container {
+  width: $lamellaContainerWidth;
+  height: $lamellaContainerHeight;
+
+  position: absolute;
+}
+
+#lamella__container > div {
+  width: $lamellaWidth;
+  height: $lamellaHeight;
+  background-color: $lamellaMainColour;
+
+  position: absolute;
+
+  box-shadow: 0 0 0 1px $lamellaMainColour;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#lamella__container span {
+  color: $lamellaMainColour;
+  font-size: 17px;
+
+  position: absolute;
+  top: 50px;
+  display: inline-block;
+}

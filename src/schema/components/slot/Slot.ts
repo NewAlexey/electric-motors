@@ -1,76 +1,66 @@
 import "./slot.scss";
-import styles from "./varibales.scss?inline";
-
-import { getElementCentralCoordsById } from "../../../shared/getElementCentralCoordsById.ts";
-import { getElementById } from "../../../shared/getElementById.ts";
-import { clearContainerContent } from "../../../shared/clearContainerContent.ts";
-import {
-    createSlotElementPropsType,
-    createSlotElementStylesType,
-    createSlotElementType,
-    DrawSlotPropsType,
-} from "./types.ts";
+import styles from "./variables.scss?inline";
+import { CircledElement } from "../utils/CircledElement.ts";
 import { getValueFromScssExport } from "../../../shared/getValueFromScssExport.ts";
-import { getRotateAngleByCountAndIndex } from "../../../shared/getRotateAngleByCountAndIndex.ts";
+import { GetContainerWithSlotListType } from "./types.ts";
+import { getElementById } from "../../../shared/getElementById.ts";
 
-export class Slot {
+const SLOT_WIDTH_TITLE = "slotWidth";
+const SLOT_HEIGHT_TITLE = "slotHeight";
+const SLOT_CONTAINER_ID = "slot__container";
+const SLOT_ID_TITLE_PART = "slot_";
+
+export class Slot extends CircledElement {
     private readonly SECTOR_CONTAINER_CLASS = "sector__container";
-    private readonly SLOT_WIDTH_TITLE = "slotWidth";
-    private readonly SLOT_HEIGHT_TITLE = "slotHeight";
-    private readonly SLOT_LIST_CONTAINER_ID = "slot__container";
-    private readonly SLOT_ID_TITLE_PART = "slot_";
-    private readonly SLOT_WIDTH_PX: number;
-    private readonly SLOT_HEIGHT_PX: number;
-    private readonly slotIdList: Array<string> = [];
 
     constructor() {
-        this.SLOT_WIDTH_PX = getValueFromScssExport({
+        const slotWidth = getValueFromScssExport({
             scssExportString: styles,
             cssStyleLength: 2,
-            cssStyleName: this.SLOT_WIDTH_TITLE,
+            cssStyleName: SLOT_WIDTH_TITLE,
         });
 
-        this.SLOT_HEIGHT_PX = getValueFromScssExport({
+        const slowHeight = getValueFromScssExport({
             scssExportString: styles,
             cssStyleLength: 2,
-            cssStyleName: this.SLOT_HEIGHT_TITLE,
+            cssStyleName: SLOT_HEIGHT_TITLE,
+        });
+
+        super({
+            elementHeight: slowHeight,
+            elementWidth: slotWidth,
+            elementIdTitlePart: SLOT_ID_TITLE_PART,
+            containerId: SLOT_CONTAINER_ID,
         });
     }
 
-    public getContainerWithSlotElements({
+    public getContainerWithSlotList({
         slotCount,
         windingCount,
-    }: DrawSlotPropsType) {
-        const slotListContainer = getElementById(this.SLOT_LIST_CONTAINER_ID);
+    }: GetContainerWithSlotListType) {
+        const slotContainer = this.getContainerWithElementList({
+            elementCount: slotCount,
+        });
+        this.fillSlotBySectorLines(windingCount);
 
-        clearContainerContent(slotListContainer);
-        this.slotIdList.splice(0, this.slotIdList.length);
+        return slotContainer;
+    }
 
-        const slotContainerCenterCoords = getElementCentralCoordsById(
-            this.SLOT_LIST_CONTAINER_ID,
-        );
+    private fillSlotBySectorLines(windingCount: number): void {
+        const slotIdList = this.getSlotIdList();
+        const slotContainer = getElementById(SLOT_CONTAINER_ID);
 
-        for (let i = 0; i < slotCount; i++) {
-            const { serialNumber, rotateAngle, slotElement } =
-                this.createSlotElement({
-                    slotContainerCenterCoords,
-                    slotCount,
-                    index: i,
-                });
+        slotIdList.forEach((slotId) => {
+            const slotElement = slotContainer.querySelector(`#${slotId}`);
 
-            const serialNumberElement = this.createSerialNumberElement({
-                serialNumber,
-                rotateAngle,
-            });
+            if (!slotElement) {
+                throw Error(`Check slot id - ${slotId}`);
+            }
 
-            const sectorContainer = this.createSectorLines(windingCount);
+            const sectorLineContainer = this.createSectorLines(windingCount);
 
-            slotElement.appendChild(serialNumberElement);
-            slotElement.appendChild(sectorContainer);
-            slotListContainer.appendChild(slotElement);
-        }
-
-        return slotListContainer;
+            slotElement.appendChild(sectorLineContainer);
+        });
     }
 
     private createSectorLines(windingCount: number): HTMLDivElement {
@@ -86,81 +76,5 @@ export class Slot {
         }
 
         return sectorLinesContainer;
-    }
-
-    private createSerialNumberElement({
-        serialNumber,
-        rotateAngle,
-    }: {
-        serialNumber: number;
-        rotateAngle: number;
-    }): HTMLSpanElement {
-        const serialNumberElement = document.createElement("span");
-        serialNumberElement.innerText = String(serialNumber);
-        serialNumberElement.style.transform = `rotate(${rotateAngle}deg)`;
-
-        return serialNumberElement;
-    }
-
-    private createSlotElement({
-        slotCount,
-        slotContainerCenterCoords,
-        index,
-    }: createSlotElementPropsType): createSlotElementType {
-        const slotElement = document.createElement("div");
-
-        const {
-            id,
-            serialNumber,
-            leftCoordinate,
-            topCoordinate,
-            transformOriginStyle,
-            rotateAngle,
-        } = this.createSlotStyles({
-            index,
-            slotCount,
-            slotContainerCenterCoords,
-        });
-
-        slotElement.id = id;
-        slotElement.style.left = leftCoordinate;
-        slotElement.style.top = topCoordinate;
-        slotElement.style.transformOrigin = transformOriginStyle;
-        slotElement.style.transform = `rotate(${-rotateAngle}deg)`;
-
-        this.slotIdList.push(id);
-
-        return { slotElement, rotateAngle, serialNumber };
-    }
-
-    private createSlotStyles({
-        slotCount,
-        slotContainerCenterCoords,
-        index,
-    }: createSlotElementPropsType): createSlotElementStylesType {
-        const leftCoordinate = `${
-            slotContainerCenterCoords.x - this.SLOT_WIDTH_PX / 2
-        }px`;
-        const topCoordinate = `${
-            slotContainerCenterCoords.y +
-            slotContainerCenterCoords.y -
-            this.SLOT_HEIGHT_PX
-        }px`;
-        const transformOriginStyle = `${this.SLOT_WIDTH_PX / 2}px -${
-            slotContainerCenterCoords.y - this.SLOT_HEIGHT_PX
-        }px`;
-        const rotateAngle = getRotateAngleByCountAndIndex(slotCount, index);
-
-        const serialNumber = index + 1;
-        const id = `${this.SLOT_ID_TITLE_PART}${serialNumber}`;
-
-        return {
-            id,
-            rotateAngle,
-            serialNumber,
-            topCoordinate,
-            leftCoordinate,
-            transformOriginStyle,
-        };
     }
 }

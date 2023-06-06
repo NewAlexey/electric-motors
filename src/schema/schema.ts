@@ -2,6 +2,7 @@ import "./schema.scss";
 
 import { FormSettingsStateType } from "../form/types.ts";
 import { Axis } from "./components/axis/Axis.ts";
+import { Lamella } from "./components/lamella/Lamella.ts";
 import { Slot } from "./components/slot/Slot.ts";
 
 export class Schema {
@@ -9,20 +10,26 @@ export class Schema {
 
     private readonly AxisClass = new Axis();
     private readonly SlotClass = new Slot();
+    private readonly LamellaClass = new Lamella();
 
     constructor() {
         this.AxisClass.drawAxis(this.SCHEMA_CONTAINER_ID);
     }
 
     public drawSchema(schemaSettings: FormSettingsStateType) {
-        const { slot, windingCount } = schemaSettings;
+        const { slot, windingCount, lamella } = schemaSettings;
 
-        const slotContainer = this.SlotClass.getContainerWithSlotElements({
+        const slotContainer = this.SlotClass.getContainerWithSlotList({
             slotCount: Number(slot),
             windingCount: Number(windingCount),
         });
 
+        const lamellaContainer = this.LamellaClass.getContainerWithLamellaList({
+            lamellaCount: Number(lamella),
+        });
+
         this.addElementsIntoSchema(slotContainer);
+        this.addElementsIntoSchema(lamellaContainer);
     }
 
     private addElementsIntoSchema(element: Element) {

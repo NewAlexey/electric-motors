@@ -1,8 +1,8 @@
-@import "varibales";
+@import "variables";
 
 #slot__container {
-  width: 70%;
-  height: 70%;
+  width: $slotContainerWidth;
+  height: $slotContainerHeight;
   position: absolute;
 }
 
@@ -16,6 +16,10 @@
   position: absolute;
 
   box-shadow: 0 0 0 1px $slotMainColour;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #slot__container span {
