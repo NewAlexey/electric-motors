@@ -1,5 +1,10 @@
 import { ElementCenteredCoordsType } from "../../../shared/getElementCentralCoordsById.ts";
 
+export type DrawSlotPropsType = {
+    slotCount: number;
+    windingCount: number;
+};
+
 export type createSlotElementType = {
     slotElement: HTMLDivElement;
     rotateAngle: number;

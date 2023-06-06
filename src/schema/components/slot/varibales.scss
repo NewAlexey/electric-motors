@@ -1,7 +1,9 @@
 $slotWidth: 60px;
 $slotHeight: 60px;
+$slotMainColour: #000000;
 
 :export {
   slotWidth: $slotWidth;
   slotHeight: $slotHeight;
+  slotMainColour: $slotMainColour;
 }

@@ -8,10 +8,13 @@ import {
     createSlotElementPropsType,
     createSlotElementStylesType,
     createSlotElementType,
+    DrawSlotPropsType,
 } from "./types.ts";
 import { getValueFromScssExport } from "../../../shared/getValueFromScssExport.ts";
+import { getRotateAngleByCountAndIndex } from "../../../shared/getRotateAngleByCountAndIndex.ts";
 
 export class Slot {
+    private readonly SECTOR_CONTAINER_CLASS = "sector__container";
     private readonly SLOT_WIDTH_TITLE = "slotWidth";
     private readonly SLOT_HEIGHT_TITLE = "slotHeight";
     private readonly SLOT_LIST_CONTAINER_ID = "slot__container";
@@ -34,7 +37,10 @@ export class Slot {
         });
     }
 
-    public getContainerWithSlotElements(slotCount: number) {
+    public getContainerWithSlotElements({
+        slotCount,
+        windingCount,
+    }: DrawSlotPropsType) {
         const slotListContainer = getElementById(this.SLOT_LIST_CONTAINER_ID);
 
         clearContainerContent(slotListContainer);
@@ -57,11 +63,29 @@ export class Slot {
                 rotateAngle,
             });
 
+            const sectorContainer = this.createSectorLines(windingCount);
+
             slotElement.appendChild(serialNumberElement);
+            slotElement.appendChild(sectorContainer);
             slotListContainer.appendChild(slotElement);
         }
 
         return slotListContainer;
+    }
+
+    private createSectorLines(windingCount: number): HTMLDivElement {
+        const sectorLinesContainer = document.createElement("div");
+        sectorLinesContainer.classList.add(this.SECTOR_CONTAINER_CLASS);
+
+        for (let i = 0; i < windingCount; i++) {
+            const sectorLine = document.createElement("div");
+            const sectorLineRotateAngle = (180 / windingCount) * i;
+            sectorLine.style.transform = `rotate(${sectorLineRotateAngle}deg)`;
+
+            sectorLinesContainer.appendChild(sectorLine);
+        }
+
+        return sectorLinesContainer;
     }
 
     private createSerialNumberElement({
@@ -125,7 +149,7 @@ export class Slot {
         const transformOriginStyle = `${this.SLOT_WIDTH_PX / 2}px -${
             slotContainerCenterCoords.y - this.SLOT_HEIGHT_PX
         }px`;
-        const rotateAngle = (360 / slotCount) * index;
+        const rotateAngle = getRotateAngleByCountAndIndex(slotCount, index);
 
         const serialNumber = index + 1;
         const id = `${this.SLOT_ID_TITLE_PART}${serialNumber}`;

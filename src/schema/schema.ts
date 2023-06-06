@@ -15,9 +15,12 @@ export class Schema {
     }
 
     public drawSchema(schemaSettings: FormSettingsStateType) {
-        const slotContainer = this.SlotClass.getContainerWithSlotElements(
-            Number(schemaSettings.slot),
-        );
+        const { slot, windingCount } = schemaSettings;
+
+        const slotContainer = this.SlotClass.getContainerWithSlotElements({
+            slotCount: Number(slot),
+            windingCount: Number(windingCount),
+        });
 
         this.addElementsIntoSchema(slotContainer);
     }

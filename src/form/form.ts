@@ -30,7 +30,16 @@ export class Form {
         SETTING_ELEMENTS_IDS.wiringDirection;
     private readonly WINDING_COUNT_ELEMENT_ID =
         SETTING_ELEMENTS_IDS.windingCount;
-
+    /**
+     * Типы данных значений объекта формы настроек.
+     *
+     * @property slot - количество `пазов`.
+     * @property lamella - количество `ламелей`.
+     * @property lamellaPosition - позиция ламелей (совпадают или нет).
+     * @property windingCount - количество обмоток.
+     * @property windingDirection - направление обмотки.
+     * @property wiringDirection - направление разводки.
+     */
     private formSettingsState: FormSettingsStateType = {
         slot: "0",
         lamella: "0",
