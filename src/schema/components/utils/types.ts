@@ -7,14 +7,20 @@ export type CircledElementConstructorType = {
     containerId: string;
 };
 
+type OptionsType = {
+    additionalAngle?: number;
+};
+
 export type GetContainerWithElementsListType = {
     elementCount: number;
+    options?: OptionsType;
 };
 
 export type CreateElementPropsType = {
     index: number;
     elementCount: number;
     elementContainerCenterCoords: ElementCenteredCoordsType;
+    options?: OptionsType;
 };
 
 export type CreateElementType = {

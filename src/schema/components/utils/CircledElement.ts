@@ -32,6 +32,7 @@ export class CircledElement {
 
     protected getContainerWithElementList({
         elementCount,
+        options,
     }: GetContainerWithElementsListType): HTMLElement {
         const elementListContainer = getElementById(this.CONTAINER_ID);
 
@@ -44,6 +45,7 @@ export class CircledElement {
 
         for (let i = 0; i < elementCount; i++) {
             const { element, rotateAngle, serialNumber } = this.createElement({
+                options,
                 elementCount,
                 elementContainerCenterCoords,
                 index: i,
@@ -61,7 +63,7 @@ export class CircledElement {
         return elementListContainer;
     }
 
-    protected getSlotIdList(): Array<string> {
+    protected getElementIdList(): Array<string> {
         return this.ELEMENT_ID_LIST;
     }
 
@@ -69,6 +71,7 @@ export class CircledElement {
         elementCount,
         index,
         elementContainerCenterCoords,
+        options,
     }: CreateElementPropsType): CreateElementType {
         const element = document.createElement("div");
 
@@ -81,6 +84,7 @@ export class CircledElement {
             transformOriginStyle,
         } = this.createElementStyles({
             index,
+            options,
             elementCount,
             elementContainerCenterCoords,
         });
@@ -99,6 +103,7 @@ export class CircledElement {
 
     private createElementStyles({
         index,
+        options,
         elementCount,
         elementContainerCenterCoords,
     }: CreateElementPropsType): CreateElementStylesType {
@@ -113,10 +118,14 @@ export class CircledElement {
         const transformOriginStyle = `${this.ELEMENT_WIDTH_PX / 2}px -${
             elementContainerCenterCoords.y - this.ELEMENT_HEIGHT_PX
         }px`;
-        const rotateAngle = getRotateAngleByCountAndIndex(elementCount, index);
+        let rotateAngle = getRotateAngleByCountAndIndex(elementCount, index);
 
         const serialNumber = index + 1;
         const id = `${this.ELEMENT_ID_TITLE_PART}${serialNumber}`;
+
+        if (options?.additionalAngle) {
+            rotateAngle = rotateAngle + options.additionalAngle;
+        }
 
         return {
             id,

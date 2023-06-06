@@ -10,14 +10,31 @@ class ElectricalMotorWiring {
     private readonly schema: Schema = new Schema();
 
     constructor() {
-        this.form.addEventListenersToFormElement(() =>
-            this.drawSchema(this.form.getSettingsValue()),
-        );
-        this.drawSchema(this.form.getSettingsValue());
+        this.form.addEventListenersToFormElement({
+            drawSlots: () => this.drawSlots(),
+            drawLamellas: () => this.drawLamellas(),
+            changeLamellasPosition: () => this.changeLamellasPosition(),
+        });
+        this.drawSchema(this.form.getFormValue());
     }
 
     private drawSchema(formValue: FormSettingsStateType) {
         this.schema.drawSchema(formValue);
+    }
+
+    private drawSlots() {
+        const { slot, windingCount } = this.form.getFormValue();
+        this.schema.drawSlots({ slot, windingCount });
+    }
+
+    private drawLamellas() {
+        const { lamellaPosition, lamella } = this.form.getLamellaValues();
+        this.schema.drawLamellas({ lamella, lamellaPosition });
+    }
+
+    private changeLamellasPosition() {
+        const { lamellaPosition } = this.form.getLamellaValues();
+        this.schema.changeLamellaPosition(lamellaPosition);
     }
 }
 

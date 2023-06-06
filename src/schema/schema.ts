@@ -1,9 +1,14 @@
 import "./schema.scss";
 
-import { FormSettingsStateType } from "../form/types.ts";
+import { FormSettingsStateType, LamellaPositionType } from "../form/types.ts";
 import { Axis } from "./components/axis/Axis.ts";
 import { Lamella } from "./components/lamella/Lamella.ts";
 import { Slot } from "./components/slot/Slot.ts";
+import {
+    DrawLamellasPropsType,
+    DrawSlotsPropsType,
+} from "./components/type.ts";
+import { getElementById } from "../shared/getElementById.ts";
 
 export class Schema {
     private readonly SCHEMA_CONTAINER_ID = "schema";
@@ -17,36 +22,38 @@ export class Schema {
     }
 
     public drawSchema(schemaSettings: FormSettingsStateType) {
-        const { slot, windingCount, lamella } = schemaSettings;
+        const { slot, windingCount, lamella, lamellaPosition } = schemaSettings;
 
+        this.drawSlots({ slot, windingCount });
+        this.drawLamellas({
+            lamella,
+            lamellaPosition: lamellaPosition as LamellaPositionType,
+        });
+    }
+
+    public drawSlots({ slot, windingCount }: DrawSlotsPropsType) {
         const slotContainer = this.SlotClass.getContainerWithSlotList({
             slotCount: Number(slot),
             windingCount: Number(windingCount),
         });
+        this.addElementsIntoSchema(slotContainer);
+    }
 
+    public drawLamellas({ lamella, lamellaPosition }: DrawLamellasPropsType) {
         const lamellaContainer = this.LamellaClass.getContainerWithLamellaList({
+            lamellaPosition,
             lamellaCount: Number(lamella),
         });
-
-        this.addElementsIntoSchema(slotContainer);
         this.addElementsIntoSchema(lamellaContainer);
     }
 
-    private addElementsIntoSchema(element: Element) {
-        const schemaContainer = this.getSchemaContainer();
-
-        schemaContainer.appendChild(element);
+    public changeLamellaPosition(lamellaPosition: LamellaPositionType) {
+        this.LamellaClass.changeLamellaPosition(lamellaPosition);
     }
 
-    private getSchemaContainer() {
-        const schemaContainer = document.getElementById(
-            this.SCHEMA_CONTAINER_ID,
-        );
+    private addElementsIntoSchema(element: Element) {
+        const schemaContainer = getElementById(this.SCHEMA_CONTAINER_ID);
 
-        if (!schemaContainer) {
-            throw Error("Check Schema Container Element.");
-        }
-
-        return schemaContainer;
+        schemaContainer.appendChild(element);
     }
 }

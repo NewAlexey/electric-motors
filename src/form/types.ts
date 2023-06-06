@@ -17,10 +17,10 @@ export type SettingsFieldType =
  * Типы данных значений объекта формы настроек.
  */
 export type SettingsValueType =
-    | string
     | LamellaPositionType
     | WindingDirectionType
-    | WiringDirectionType;
+    | WiringDirectionType
+    | string;
 
 /**
  * Тип данных объекта формы.
@@ -29,3 +29,14 @@ export type FormSettingsStateType = Record<
     SettingsFieldType,
     SettingsValueType
 >;
+
+export type EventListenerProps = {
+    drawSlots: () => void;
+    drawLamellas: () => void;
+    changeLamellasPosition: () => void;
+};
+
+export type LamellaTypes = {
+    lamella: string;
+    lamellaPosition: LamellaPositionType;
+};

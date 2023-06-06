@@ -1,8 +1,10 @@
 import "./form.scss";
 
 import {
+    EventListenerProps,
     FormSettingsStateType,
     LamellaPositionType,
+    LamellaTypes,
     SettingsFieldType,
     SettingsValueType,
     WindingDirectionType,
@@ -53,11 +55,24 @@ export class Form {
         this.setInitialFormState();
     }
 
-    public getSettingsValue(): FormSettingsStateType {
+    public getFormValue(): FormSettingsStateType {
         return this.formSettingsState;
     }
 
-    public addEventListenersToFormElement(callback: () => void) {
+    public getLamellaValues(): LamellaTypes {
+        const { lamellaPosition, lamella } = this.getFormValue();
+
+        return {
+            lamella,
+            lamellaPosition: lamellaPosition as LamellaPositionType,
+        };
+    }
+
+    public addEventListenersToFormElement({
+        drawSlots,
+        drawLamellas,
+        changeLamellasPosition,
+    }: EventListenerProps) {
         const entries = Object.entries<SettingsValueType>(SETTING_ELEMENTS_IDS);
 
         entries.forEach((entry) => {
@@ -74,7 +89,25 @@ export class Form {
                     this.formSettingsState[field] = event.target
                         .value as SettingsValueType;
 
-                    callback();
+                    switch (field) {
+                        case "slot": {
+                            drawSlots();
+
+                            break;
+                        }
+
+                        case "lamella": {
+                            drawLamellas();
+
+                            break;
+                        }
+
+                        case "lamellaPosition": {
+                            changeLamellasPosition();
+
+                            break;
+                        }
+                    }
                 }
             });
         });

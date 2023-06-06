@@ -47,7 +47,7 @@ export class Slot extends CircledElement {
     }
 
     private fillSlotBySectorLines(windingCount: number): void {
-        const slotIdList = this.getSlotIdList();
+        const slotIdList = this.getElementIdList();
         const slotContainer = getElementById(SLOT_CONTAINER_ID);
 
         slotIdList.forEach((slotId) => {
