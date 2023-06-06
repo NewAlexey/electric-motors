@@ -8,6 +8,7 @@ import {
     WindingDirectionType,
     WiringDirectionType,
 } from "./types.ts";
+import { getElementById } from "../shared/getElementById.ts";
 
 const SETTING_ELEMENTS_IDS: Record<SettingsFieldType, string> = {
     slot: "slot",
@@ -52,11 +53,9 @@ export class Form {
             const field = entry[0] as SettingsFieldType;
             const id = entry[1];
 
-            const element = this.getElementById<
-                HTMLInputElement | HTMLSelectElement
-            >(id);
+            const element = getElementById(id);
 
-            element?.addEventListener("input", (event: Event) => {
+            element.addEventListener("input", (event: Event) => {
                 if (
                     event.target instanceof HTMLInputElement ||
                     event.target instanceof HTMLSelectElement
@@ -71,21 +70,21 @@ export class Form {
     }
 
     private setInitialFormState() {
-        const slotElement = this.getElementById<HTMLInputElement>(
+        const slotElement = getElementById(
             this.SLOT_ELEMENT_ID,
-        );
-        const lamellaElement = this.getElementById<HTMLInputElement>(
+        ) as HTMLInputElement;
+        const lamellaElement = getElementById(
             this.LAMELLA_ELEMENT_ID,
-        );
-        const lamellaPositionElement = this.getElementById<HTMLSelectElement>(
+        ) as HTMLInputElement;
+        const lamellaPositionElement = getElementById(
             this.LAMELLA_POSITION_ELEMENT_ID,
-        );
-        const windingDirectionElement = this.getElementById<HTMLSelectElement>(
+        ) as HTMLSelectElement;
+        const windingDirectionElement = getElementById(
             this.WINDING_DIRECTION_ELEMENT_ID,
-        );
-        const wiringDirectionElement = this.getElementById<HTMLSelectElement>(
+        ) as HTMLSelectElement;
+        const wiringDirectionElement = getElementById(
             this.WIRING_DIRECTION_ELEMENT_ID,
-        );
+        ) as HTMLSelectElement;
 
         if (
             !slotElement ||
@@ -105,9 +104,5 @@ export class Form {
             windingDirectionElement.value as WindingDirectionType;
         this.formSettingsState.wiringDirection =
             wiringDirectionElement.value as WiringDirectionType;
-    }
-
-    private getElementById<T extends Element>(id: string): T | null {
-        return document.querySelector(`#${id}`);
     }
 }
