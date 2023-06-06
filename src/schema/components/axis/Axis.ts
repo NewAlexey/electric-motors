@@ -1,3 +1,5 @@
+import "./axis.scss";
+
 export class Axis {
     private readonly AXIS_X_ELEMENT_ID = "axis-X";
     private readonly AXIS_Y_ELEMENT_ID = "axis-Y";

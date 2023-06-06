@@ -1,9 +1,9 @@
-type ElementCenteredCoordsType = {
+export type ElementCenteredCoordsType = {
     x: number;
     y: number;
 };
 
-export function getElementCenteredCordsById(
+export function getElementCentralCoordsById(
     elementId: string,
 ): ElementCenteredCoordsType {
     const element = document.getElementById(elementId);

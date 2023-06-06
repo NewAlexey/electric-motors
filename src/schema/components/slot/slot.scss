@@ -1,0 +1,30 @@
+@import "varibales";
+
+#slot__container {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+}
+
+#slot__container > div {
+  width: $slotWidth;
+  height: $slotHeight;
+  background-color: #ffffff;
+
+  border-radius: 50%;
+
+  position: absolute;
+
+  -webkit-box-shadow: 0 0 0 1px rgba(34, 60, 80, 1);
+  -moz-box-shadow: 0 0 0 1px rgba(34, 60, 80, 1);
+  box-shadow: 0 0 0 1px rgba(34, 60, 80, 1);
+}
+
+#slot__container span {
+  color: black;
+  font-size: 17px;
+
+  position: relative;
+  top: -30px;
+  display: inline-block;
+}
