@@ -1,58 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
     <title>Electrical Motor Schemas</title>
-  </head>
-  <body>
-    <main class="container">
-      <div id="settings">
+</head>
+<body>
+<main class="container">
+    <div id="settings">
         <form class="form-settings">
-          <label for="slot">
-            Количество Пазов
-            <input id="slot" type="number" value="12"/>
-          </label>
-
-          <label for="lamella">
-            Количество Ламелей
-            <input id="lamella" type="number" value="20"/>
-          </label>
-
-          <label for="lamella-position">
-            Расположение ламелей
-            <select id="lamella-position">
-              <option value="combined">Совмещены</option>
-              <option value="notCombined">Не Совмещены</option>
-            </select>
-          </label>
-
-          <label for="winding-direction">
-            Направление намотки
-            <select id="winding-direction">
-              <option value="direct">Прямое</option>
-              <option value="reverse">Обратное</option>
-            </select>
-          </label>
-
-          <label for="wiring-direction">
-            Направление разводки
-            <select id="wiring-direction">
-              <option value="right">Правое</option>
-              <option value="left">Левое</option>
-            </select>
-          </label>
-
+            <div>
+                <label for="slot"> Количество Пазов </label>
+                <input
+                  id="slot"
+                  type="number"
+                  value="12" />
+            </div>
+            
+            <div>
+                <label for="lamella"> Количество Ламелей </label>
+                <input
+                  id="lamella"
+                  type="number"
+                  value="20" />
+            </div>
+            
+            <div>
+                <label for="winding-count"> Количество обмоток </label>
+                <input
+                  id="winding-count"
+                  type="number"
+                  value="2" />
+            </div>
+            
+            <div>
+                <label for="lamella-position"> Расположение ламелей </label>
+                <select id="lamella-position">
+                    <option value="combined">Совмещены</option>
+                    <option value="notCombined">Не Совмещены</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="winding-direction"> Направление намотки </label>
+                <select id="winding-direction">
+                    <option value="direct">Прямое</option>
+                    <option value="reverse">Обратное</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="wiring-direction"> Направление разводки </label>
+                <select id="wiring-direction">
+                    <option value="right">Правое</option>
+                    <option value="left">Левое</option>
+                </select>
+            </div>
+        
         </form>
-      </div>
-      <div id="schema">
+    </div>
+    <div id="schema">
         <div id="slot__container"></div>
         <div id="lamella__container"></div>
-
-        <div id="axis-X" class="axis"></div>
-        <div id="axis-Y" class="axis"></div>
-      </div>
-    </main>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+        
+        <div
+          id="axis-X"
+          class="axis"></div>
+        <div
+          id="axis-Y"
+          class="axis"></div>
+    </div>
+</main>
+<script
+  type="module"
+  src="/src/main.ts"></script>
+</body>
 </html>

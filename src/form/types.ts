@@ -7,7 +7,8 @@ export type SettingsFieldType =
     | "lamella"
     | "lamellaPosition"
     | "windingDirection"
-    | "wiringDirection";
+    | "wiringDirection"
+    | "windingCount";
 
 export type SettingsValueType =
     | string

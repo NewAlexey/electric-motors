@@ -14,6 +14,7 @@ const SETTING_ELEMENTS_IDS: Record<SettingsFieldType, string> = {
     slot: "slot",
     lamella: "lamella",
     lamellaPosition: "lamella-position",
+    windingCount: "winding-count",
     windingDirection: "winding-direction",
     wiringDirection: "wiring-direction",
 };
@@ -27,11 +28,14 @@ export class Form {
         SETTING_ELEMENTS_IDS.windingDirection;
     private readonly WIRING_DIRECTION_ELEMENT_ID =
         SETTING_ELEMENTS_IDS.wiringDirection;
+    private readonly WINDING_COUNT_ELEMENT_ID =
+        SETTING_ELEMENTS_IDS.windingCount;
 
     private formSettingsState: FormSettingsStateType = {
         slot: "0",
         lamella: "0",
         lamellaPosition: "combined",
+        windingCount: "0",
         windingDirection: "direct",
         wiringDirection: "right",
     };
@@ -44,9 +48,7 @@ export class Form {
         return this.formSettingsState;
     }
 
-    public addEventListenersToFormElement(
-        callback: (formState: FormSettingsStateType) => void,
-    ) {
+    public addEventListenersToFormElement(callback: () => void) {
         const entries = Object.entries<SettingsValueType>(SETTING_ELEMENTS_IDS);
 
         entries.forEach((entry) => {
@@ -63,7 +65,7 @@ export class Form {
                     this.formSettingsState[field] = event.target
                         .value as SettingsValueType;
 
-                    callback(this.getSettingsValue());
+                    callback();
                 }
             });
         });
@@ -86,15 +88,9 @@ export class Form {
             this.WIRING_DIRECTION_ELEMENT_ID,
         ) as HTMLSelectElement;
 
-        if (
-            !slotElement ||
-            !lamellaElement ||
-            !lamellaPositionElement ||
-            !windingDirectionElement ||
-            !wiringDirectionElement
-        ) {
-            return;
-        }
+        const windingCountElement = getElementById(
+            this.WINDING_COUNT_ELEMENT_ID,
+        ) as HTMLSelectElement;
 
         this.formSettingsState.slot = slotElement.value;
         this.formSettingsState.lamella = lamellaElement.value;
@@ -104,5 +100,6 @@ export class Form {
             windingDirectionElement.value as WindingDirectionType;
         this.formSettingsState.wiringDirection =
             wiringDirectionElement.value as WiringDirectionType;
+        this.formSettingsState.windingCount = windingCountElement.value;
     }
 }

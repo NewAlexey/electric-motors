@@ -1,8 +1,27 @@
 .form-settings {
   display: flex;
+
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
-input, select {
+select, input {
   padding: 5px 10px;
   margin: 5px;
+}
+
+input {
+  padding: 7px 10px;
+
+  width: 150px;
+}
+
+.form-settings > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0 15px;
 }
