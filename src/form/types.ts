@@ -15,4 +15,7 @@ export type SettingsValueType =
     | WindingDirectionType
     | WiringDirectionType;
 
-export type SelectedSettingsType = Record<SettingsFieldType, SettingsValueType>;
+export type FormSettingsStateType = Record<
+    SettingsFieldType,
+    SettingsValueType
+>;

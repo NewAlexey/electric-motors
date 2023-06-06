@@ -1,15 +1,15 @@
 import "./slot.scss";
 import styles from "./varibales.scss?inline";
 
-import { getElementCentralCoordsById } from "../../utils/getElementCentralCoordsById.ts";
-import { getElementById } from "../../utils/getElementById.ts";
-import { clearContainerContent } from "../../utils/clearContainerContent.ts";
+import { getElementCentralCoordsById } from "../../../shared/getElementCentralCoordsById.ts";
+import { getElementById } from "../../../shared/getElementById.ts";
+import { clearContainerContent } from "../../../shared/clearContainerContent.ts";
 import {
     createSlotElementPropsType,
     createSlotElementStylesType,
     createSlotElementType,
 } from "./types.ts";
-import { getValueFromScssExport } from "../../utils/getValueFromScssExport.ts";
+import { getValueFromScssExport } from "../../../shared/getValueFromScssExport.ts";
 
 export class Slot {
     private readonly SLOT_WIDTH_TITLE = "slotWidth";

@@ -27,12 +27,3 @@ body {
   padding: 2rem;
   text-align: center;
 }
-
-.form-settings {
-  display: flex;
-}
-
-input, select {
-  padding: 5px 10px;
-  margin: 5px;
-}

@@ -1,4 +1,4 @@
-import { ElementCenteredCoordsType } from "../../utils/getElementCentralCoordsById.ts";
+import { ElementCenteredCoordsType } from "../../../shared/getElementCentralCoordsById.ts";
 
 export type createSlotElementType = {
     slotElement: HTMLDivElement;
