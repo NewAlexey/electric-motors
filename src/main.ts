@@ -6,35 +6,41 @@ import { Schema } from "./schema/schema.ts";
 import { Form } from "./form/form.ts";
 
 class ElectricalMotorWiring {
-    private readonly form: Form = new Form();
-    private readonly schema: Schema = new Schema();
+    private readonly Form: Form = new Form();
+    private readonly Schema: Schema = new Schema();
 
     constructor() {
-        this.form.addEventListenersToFormElement({
+        this.Form.addEventListenersToFormElement({
             drawSlots: () => this.drawSlots(),
             drawLamellas: () => this.drawLamellas(),
             changeLamellasPosition: () => this.changeLamellasPosition(),
+            changeSlotSectorLines: () => this.changeSlotSectorCount(),
         });
-        this.drawSchema(this.form.getFormValue());
+        this.drawSchema(this.Form.getFormValue());
     }
 
     private drawSchema(formValue: FormSettingsStateType) {
-        this.schema.drawSchema(formValue);
+        this.Schema.drawSchema(formValue);
     }
 
     private drawSlots() {
-        const { slot, windingCount } = this.form.getFormValue();
-        this.schema.drawSlots({ slot, windingCount });
+        const { slot, windingCount } = this.Form.getFormValue();
+        this.Schema.drawSlots({ slot, windingCount });
     }
 
     private drawLamellas() {
-        const { lamellaPosition, lamella } = this.form.getLamellaValues();
-        this.schema.drawLamellas({ lamella, lamellaPosition });
+        const { lamellaPosition, lamella } = this.Form.getLamellaValues();
+        this.Schema.drawLamellas({ lamella, lamellaPosition });
     }
 
     private changeLamellasPosition() {
-        const { lamellaPosition } = this.form.getLamellaValues();
-        this.schema.changeLamellaPosition(lamellaPosition);
+        const { lamellaPosition } = this.Form.getLamellaValues();
+        this.Schema.changeLamellaPosition(lamellaPosition);
+    }
+
+    private changeSlotSectorCount() {
+        const { windingCount } = this.Form.getFormValue();
+        this.Schema.changeSlotSectorCount(windingCount);
     }
 }
 

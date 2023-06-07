@@ -13,12 +13,12 @@ import { getElementById } from "../shared/getElementById.ts";
 export class Schema {
     private readonly SCHEMA_CONTAINER_ID = "schema";
 
-    private readonly AxisClass = new Axis();
-    private readonly SlotClass = new Slot();
-    private readonly LamellaClass = new Lamella();
+    private readonly Axis = new Axis();
+    private readonly Slot = new Slot();
+    private readonly Lamella = new Lamella();
 
     constructor() {
-        this.AxisClass.drawAxis(this.SCHEMA_CONTAINER_ID);
+        this.Axis.drawAxis(this.SCHEMA_CONTAINER_ID);
     }
 
     public drawSchema(schemaSettings: FormSettingsStateType) {
@@ -32,7 +32,7 @@ export class Schema {
     }
 
     public drawSlots({ slot, windingCount }: DrawSlotsPropsType) {
-        const slotContainer = this.SlotClass.getContainerWithSlotList({
+        const slotContainer = this.Slot.getContainerWithSlotList({
             slotCount: Number(slot),
             windingCount: Number(windingCount),
         });
@@ -40,7 +40,7 @@ export class Schema {
     }
 
     public drawLamellas({ lamella, lamellaPosition }: DrawLamellasPropsType) {
-        const lamellaContainer = this.LamellaClass.getContainerWithLamellaList({
+        const lamellaContainer = this.Lamella.getContainerWithLamellaList({
             lamellaPosition,
             lamellaCount: Number(lamella),
         });
@@ -48,7 +48,11 @@ export class Schema {
     }
 
     public changeLamellaPosition(lamellaPosition: LamellaPositionType) {
-        this.LamellaClass.changeLamellaPosition(lamellaPosition);
+        this.Lamella.changeLamellaPosition(lamellaPosition);
+    }
+
+    public changeSlotSectorCount(windingCount: string) {
+        this.Slot.changeSectorCount(Number(windingCount));
     }
 
     private addElementsIntoSchema(element: Element) {

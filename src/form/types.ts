@@ -34,6 +34,7 @@ export type EventListenerProps = {
     drawSlots: () => void;
     drawLamellas: () => void;
     changeLamellasPosition: () => void;
+    changeSlotSectorLines: () => void;
 };
 
 export type LamellaTypes = {

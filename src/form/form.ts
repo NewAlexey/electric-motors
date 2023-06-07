@@ -71,6 +71,7 @@ export class Form {
     public addEventListenersToFormElement({
         drawSlots,
         drawLamellas,
+        changeSlotSectorLines,
         changeLamellasPosition,
     }: EventListenerProps) {
         const entries = Object.entries<SettingsValueType>(SETTING_ELEMENTS_IDS);
@@ -106,6 +107,16 @@ export class Form {
                             changeLamellasPosition();
 
                             break;
+                        }
+
+                        case "windingCount": {
+                            changeSlotSectorLines();
+
+                            break;
+                        }
+
+                        default: {
+                            throw Error(`Check field - ${field}.`);
                         }
                     }
                 }

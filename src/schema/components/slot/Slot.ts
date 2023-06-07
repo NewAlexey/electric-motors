@@ -1,5 +1,6 @@
 import "./slot.scss";
 import styles from "./variables.scss?inline";
+
 import { CircledElement } from "../utils/CircledElement.ts";
 import { getValueFromScssExport } from "../../../shared/getValueFromScssExport.ts";
 import { GetContainerWithSlotListType } from "./types.ts";
@@ -41,12 +42,12 @@ export class Slot extends CircledElement {
         const slotContainer = this.getContainerWithElementList({
             elementCount: slotCount,
         });
-        this.fillSlotBySectorLines(windingCount);
+        this.drawSectorLines(windingCount);
 
         return slotContainer;
     }
 
-    private fillSlotBySectorLines(windingCount: number): void {
+    public drawSectorLines(windingCount: number): void {
         const slotIdList = this.getElementIdList();
         const slotContainer = getElementById(SLOT_CONTAINER_ID);
 
@@ -60,6 +61,35 @@ export class Slot extends CircledElement {
             const sectorLineContainer = this.createSectorLines(windingCount);
 
             slotElement.appendChild(sectorLineContainer);
+        });
+    }
+
+    public changeSectorCount(windingCount: number) {
+        const slotIdList = this.getElementIdList();
+        const slotContainer = getElementById(SLOT_CONTAINER_ID);
+
+        slotIdList.forEach((slotId) => {
+            const slotElement = slotContainer.querySelector(`#${slotId}`);
+
+            if (!slotElement) {
+                throw Error(`Check slot id - ${slotId}`);
+            }
+
+            const sectorLinesContainer = slotElement.querySelector(
+                `.${this.SECTOR_CONTAINER_CLASS}`,
+            );
+
+            if (!sectorLinesContainer) {
+                throw Error(
+                    `Check sector lines container and class - ${this.SECTOR_CONTAINER_CLASS}`,
+                );
+            }
+
+            sectorLinesContainer.remove();
+
+            const newSectorLineContainer = this.createSectorLines(windingCount);
+
+            slotElement.appendChild(newSectorLineContainer);
         });
     }
 
