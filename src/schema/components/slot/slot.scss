@@ -4,9 +4,13 @@
   width: $slotContainerWidth;
   height: $slotContainerHeight;
   position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#slot__container > div {
+.slot-item {
   width: $slotWidth;
   height: $slotHeight;
   background-color: #ffffff;
@@ -46,4 +50,12 @@
   height: 100%;
   background-color: $slotMainColour;
   position: absolute;
+}
+
+.surrounding-circle {
+  height: 100%;
+  border: 1px solid #000000;
+  border-radius: 50%;
+
+  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.2);
 }

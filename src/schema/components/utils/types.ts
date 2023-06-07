@@ -9,6 +9,7 @@ export type CircledElementConstructorType = {
 
 type OptionsType = {
     additionalAngle?: number;
+    itemClass?: string;
 };
 
 export type GetContainerWithElementsListType = {

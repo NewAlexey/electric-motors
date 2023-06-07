@@ -89,7 +89,10 @@ export class CircledElement {
             elementContainerCenterCoords,
         });
 
-        element.id = id;
+        if (options?.itemClass) {
+            element.classList.add(options.itemClass);
+        }
+
         element.id = id;
         element.style.left = leftCoordinate;
         element.style.top = topCoordinate;

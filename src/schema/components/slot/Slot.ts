@@ -13,6 +13,8 @@ const SLOT_ID_TITLE_PART = "slot_";
 
 export class Slot extends CircledElement {
     private readonly SECTOR_CONTAINER_CLASS = "sector__container";
+    private readonly SURROUNDING_CIRCLE_CLASS = "surrounding-circle";
+    private readonly SLOT_CLASS = "slot-item";
 
     constructor() {
         const slotWidth = getValueFromScssExport({
@@ -41,8 +43,12 @@ export class Slot extends CircledElement {
     }: GetContainerWithSlotListType) {
         const slotContainer = this.getContainerWithElementList({
             elementCount: slotCount,
+            options: {
+                itemClass: this.SLOT_CLASS,
+            },
         });
         this.drawSectorLines(windingCount);
+        this.drawCircleAroundSlots();
 
         return slotContainer;
     }
@@ -106,5 +112,16 @@ export class Slot extends CircledElement {
         }
 
         return sectorLinesContainer;
+    }
+
+    private drawCircleAroundSlots() {
+        const slotContainer = getElementById(SLOT_CONTAINER_ID);
+
+        const slotContainerRect = slotContainer.getBoundingClientRect();
+
+        const circle = document.createElement("div");
+        circle.classList.add(this.SURROUNDING_CIRCLE_CLASS);
+        circle.style.width = `${slotContainerRect.height}px`;
+        slotContainer.appendChild(circle);
     }
 }
