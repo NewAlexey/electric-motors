@@ -35,6 +35,7 @@ export type EventListenerProps = {
     drawLamellas: () => void;
     changeLamellasPosition: () => void;
     changeSlotSectorLines: () => void;
+    drawWiringDirectionArrow: () => void;
 };
 
 export type LamellaTypes = {

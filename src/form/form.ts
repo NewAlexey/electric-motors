@@ -73,6 +73,7 @@ export class Form {
         drawLamellas,
         changeSlotSectorLines,
         changeLamellasPosition,
+        drawWiringDirectionArrow,
     }: EventListenerProps) {
         const entries = Object.entries<SettingsValueType>(SETTING_ELEMENTS_IDS);
 
@@ -111,6 +112,12 @@ export class Form {
 
                         case "windingCount": {
                             changeSlotSectorLines();
+
+                            break;
+                        }
+
+                        case "wiringDirection": {
+                            drawWiringDirectionArrow();
 
                             break;
                         }

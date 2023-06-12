@@ -1,6 +1,10 @@
 import "./schema.scss";
 
-import { FormSettingsStateType, LamellaPositionType } from "../form/types.ts";
+import {
+    FormSettingsStateType,
+    LamellaPositionType,
+    WiringDirectionType,
+} from "../form/types.ts";
 import { Axis } from "./components/axis/Axis.ts";
 import { Lamella } from "./components/lamella/Lamella.ts";
 import { Slot } from "./components/slot/Slot.ts";
@@ -9,6 +13,7 @@ import {
     DrawSlotsPropsType,
 } from "./components/type.ts";
 import { getElementById } from "../shared/getElementById.ts";
+import { WiringArrow } from "./components/wiring/WiringArrow.ts";
 
 export class Schema {
     private readonly SCHEMA_CONTAINER_ID = "schema";
@@ -16,19 +21,27 @@ export class Schema {
     private readonly Axis = new Axis();
     private readonly Slot = new Slot();
     private readonly Lamella = new Lamella();
+    private readonly WiringArrow = new WiringArrow();
 
     constructor() {
         this.Axis.drawAxis(this.SCHEMA_CONTAINER_ID);
     }
 
     public drawSchema(schemaSettings: FormSettingsStateType) {
-        const { slot, windingCount, lamella, lamellaPosition } = schemaSettings;
+        const {
+            slot,
+            windingCount,
+            lamella,
+            lamellaPosition,
+            wiringDirection,
+        } = schemaSettings;
 
         this.drawSlots({ slot, windingCount });
         this.drawLamellas({
             lamella,
             lamellaPosition: lamellaPosition as LamellaPositionType,
         });
+        this.drawWiringDirectionArrow(wiringDirection);
     }
 
     public drawSlots({ slot, windingCount }: DrawSlotsPropsType) {
@@ -53,6 +66,12 @@ export class Schema {
 
     public changeSlotSectorCount(windingCount: string) {
         this.Slot.changeSectorCount(Number(windingCount));
+    }
+
+    public drawWiringDirectionArrow(wiringDirection: string) {
+        this.WiringArrow.drawDirectionArrow(
+            wiringDirection as WiringDirectionType,
+        );
     }
 
     private addElementsIntoSchema(element: Element) {

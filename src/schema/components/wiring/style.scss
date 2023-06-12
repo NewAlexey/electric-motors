@@ -1,0 +1,24 @@
+#wiring-arrow__container {
+  width: 80%;
+  height: 100%;
+
+  position: absolute;
+}
+
+.arrow-image {
+  position: absolute;
+
+  bottom: 5%;
+  width: 11%;
+  height: 15%;
+}
+
+.arrow-image__left {
+  left: 10%;
+  transform: rotate(90deg);
+}
+
+.arrow-image__right {
+  right: 10%;
+  transform: rotate(90deg) scale(1, -1);
+}

@@ -13,8 +13,9 @@ class ElectricalMotorWiring {
         this.Form.addEventListenersToFormElement({
             drawSlots: () => this.drawSlots(),
             drawLamellas: () => this.drawLamellas(),
-            changeLamellasPosition: () => this.changeLamellasPosition(),
             changeSlotSectorLines: () => this.changeSlotSectorCount(),
+            changeLamellasPosition: () => this.changeLamellasPosition(),
+            drawWiringDirectionArrow: () => this.drawWiringDirectionArrow(),
         });
         this.drawSchema(this.Form.getFormValue());
     }
@@ -41,6 +42,11 @@ class ElectricalMotorWiring {
     private changeSlotSectorCount() {
         const { windingCount } = this.Form.getFormValue();
         this.Schema.changeSlotSectorCount(windingCount);
+    }
+
+    private drawWiringDirectionArrow() {
+        const { wiringDirection } = this.Form.getFormValue();
+        this.Schema.drawWiringDirectionArrow(wiringDirection);
     }
 }
 
