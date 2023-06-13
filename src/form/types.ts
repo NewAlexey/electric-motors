@@ -11,6 +11,7 @@ export type SettingsFieldType =
     | "lamellaPosition"
     | "windingDirection"
     | "wiringDirection"
+    | "wiringStep"
     | "windingCount";
 
 /**
@@ -31,11 +32,12 @@ export type FormSettingsStateType = Record<
 >;
 
 export type EventListenerProps = {
-    drawSlots: () => void;
-    drawLamellas: () => void;
+    changeSlotCount: () => void;
+    changeLamellaCount: () => void;
+    changeWiringStep: () => void;
     changeLamellasPosition: () => void;
     changeSlotSectorLines: () => void;
-    drawWiringDirectionArrow: () => void;
+    changeWiringDirectionArrow: () => void;
 };
 
 export type LamellaTypes = {

@@ -4,7 +4,7 @@ import { WiringDirectionType } from "../../../form/types.ts";
 import { getElementById } from "../../../shared/getElementById.ts";
 
 export class WiringArrow {
-    private readonly WIRING_ARROW_CONTAINER_ID = "wiring-arrow__container";
+    private readonly WIRING_ARROW_CONTAINER_ID = "wiring-direction__container";
     private readonly IMAGE_ARROW_CLASS = "arrow-image";
     private readonly IMAGE_ARROW_LEFT_CLASS = "arrow-image__left";
     private readonly IMAGE_ARROW_RIGHT_CLASS = "arrow-image__right";

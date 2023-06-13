@@ -1,9 +1,19 @@
 @import "variables";
 
+#canvas__wiring-arrows {
+  position: absolute;
+
+  pointer-events: none;
+  
+  width: 60%;
+  height: 60%;
+}
+
 #slot__container {
+  position: absolute;
+
   width: $slotContainerWidth;
   height: $slotContainerHeight;
-  position: absolute;
 
   display: flex;
   align-items: center;

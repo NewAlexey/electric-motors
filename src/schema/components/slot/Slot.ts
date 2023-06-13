@@ -99,6 +99,10 @@ export class Slot extends CircledElement {
         });
     }
 
+    public getSlotIdTitlePart() {
+        return SLOT_ID_TITLE_PART;
+    }
+
     private createSectorLines(windingCount: number): HTMLDivElement {
         const sectorLinesContainer = document.createElement("div");
         sectorLinesContainer.classList.add(this.SECTOR_CONTAINER_CLASS);

@@ -19,6 +19,7 @@ const SETTING_ELEMENTS_IDS: Record<SettingsFieldType, string> = {
     windingCount: "winding-count",
     windingDirection: "winding-direction",
     wiringDirection: "wiring-direction",
+    wiringStep: "wiring-step",
 };
 
 export class Form {
@@ -32,6 +33,8 @@ export class Form {
         SETTING_ELEMENTS_IDS.wiringDirection;
     private readonly WINDING_COUNT_ELEMENT_ID =
         SETTING_ELEMENTS_IDS.windingCount;
+    private readonly WIRING_STEP_ELEMENT_ID = SETTING_ELEMENTS_IDS.wiringStep;
+
     /**
      * Типы данных значений объекта формы настроек.
      *
@@ -49,6 +52,7 @@ export class Form {
         windingCount: "0",
         windingDirection: "direct",
         wiringDirection: "right",
+        wiringStep: "1-1",
     };
 
     constructor() {
@@ -69,11 +73,12 @@ export class Form {
     }
 
     public addEventListenersToFormElement({
-        drawSlots,
-        drawLamellas,
+        changeSlotCount,
+        changeLamellaCount,
+        changeWiringStep,
         changeSlotSectorLines,
         changeLamellasPosition,
-        drawWiringDirectionArrow,
+        changeWiringDirectionArrow,
     }: EventListenerProps) {
         const entries = Object.entries<SettingsValueType>(SETTING_ELEMENTS_IDS);
 
@@ -93,13 +98,13 @@ export class Form {
 
                     switch (field) {
                         case "slot": {
-                            drawSlots();
+                            changeSlotCount();
 
                             break;
                         }
 
                         case "lamella": {
-                            drawLamellas();
+                            changeLamellaCount();
 
                             break;
                         }
@@ -117,7 +122,21 @@ export class Form {
                         }
 
                         case "wiringDirection": {
-                            drawWiringDirectionArrow();
+                            changeWiringDirectionArrow();
+
+                            break;
+                        }
+
+                        case "wiringStep": {
+                            changeWiringStep();
+
+                            break;
+                        }
+
+                        case "windingDirection": {
+                            console.log(
+                                "Function for change winding direction not implemented yet.",
+                            );
 
                             break;
                         }
@@ -151,6 +170,9 @@ export class Form {
         const windingCountElement = getElementById(
             this.WINDING_COUNT_ELEMENT_ID,
         ) as HTMLSelectElement;
+        const wiringStepElement = getElementById(
+            this.WIRING_STEP_ELEMENT_ID,
+        ) as HTMLSelectElement;
 
         this.formSettingsState.slot = slotElement.value;
         this.formSettingsState.lamella = lamellaElement.value;
@@ -161,5 +183,6 @@ export class Form {
         this.formSettingsState.wiringDirection =
             wiringDirectionElement.value as WiringDirectionType;
         this.formSettingsState.windingCount = windingCountElement.value;
+        this.formSettingsState.wiringStep = wiringStepElement.value;
     }
 }

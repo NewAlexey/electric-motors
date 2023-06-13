@@ -1,7 +1,7 @@
 import "./styles/normalize.css";
-import "./styles/style.css";
+import "./styles/style.scss";
 
-import { FormSettingsStateType } from "./form/types.ts";
+import { FormSettingsStateType, WindingDirectionType } from "./form/types.ts";
 import { Schema } from "./schema/schema.ts";
 import { Form } from "./form/form.ts";
 
@@ -11,11 +11,15 @@ class ElectricalMotorWiring {
 
     constructor() {
         this.Form.addEventListenersToFormElement({
-            drawSlots: () => this.drawSlots(),
-            drawLamellas: () => this.drawLamellas(),
+            changeSlotCount: () => {
+                this.changeSlotCount();
+                this.changeWiringStep();
+            },
+            changeWiringStep: () => this.changeWiringStep(),
+            changeLamellaCount: () => this.changeLamellaCount(),
             changeSlotSectorLines: () => this.changeSlotSectorCount(),
             changeLamellasPosition: () => this.changeLamellasPosition(),
-            drawWiringDirectionArrow: () => this.drawWiringDirectionArrow(),
+            changeWiringDirectionArrow: () => this.changeWiringDirectionArrow(),
         });
         this.drawSchema(this.Form.getFormValue());
     }
@@ -24,12 +28,12 @@ class ElectricalMotorWiring {
         this.Schema.drawSchema(formValue);
     }
 
-    private drawSlots() {
+    private changeSlotCount() {
         const { slot, windingCount } = this.Form.getFormValue();
         this.Schema.drawSlots({ slot, windingCount });
     }
 
-    private drawLamellas() {
+    private changeLamellaCount() {
         const { lamellaPosition, lamella } = this.Form.getLamellaValues();
         this.Schema.drawLamellas({ lamella, lamellaPosition });
     }
@@ -44,9 +48,19 @@ class ElectricalMotorWiring {
         this.Schema.changeSlotSectorCount(windingCount);
     }
 
-    private drawWiringDirectionArrow() {
+    private changeWiringDirectionArrow() {
         const { wiringDirection } = this.Form.getFormValue();
         this.Schema.drawWiringDirectionArrow(wiringDirection);
+    }
+
+    private changeWiringStep() {
+        const { wiringStep, windingDirection, slot } = this.Form.getFormValue();
+
+        this.Schema.changeWiringStep({
+            wiringStep,
+            slot: Number(slot),
+            windingDirection: windingDirection as WindingDirectionType,
+        });
     }
 }
 

@@ -34,7 +34,9 @@ export class CircledElement {
         elementCount,
         options,
     }: GetContainerWithElementsListType): HTMLElement {
-        const elementListContainer = getElementById(this.CONTAINER_ID);
+        const elementListContainer = getElementById(
+            this.CONTAINER_ID,
+        ) as HTMLElement;
 
         this.clearIdList();
         clearContainerContent(elementListContainer);
