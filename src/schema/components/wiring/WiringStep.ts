@@ -19,14 +19,74 @@ export class WiringStep {
         windingDirection,
     }: DrawWiringArrowsType) {
         const idList: string[] = this.getIdSlotList(wiringStep);
-        const step = this.getWiringStep(idList);
 
-        this.drawArrows({
+        this.drawArrowsV2({
             slot,
-            step,
             windingDirection,
             firstIdPair: idList,
         });
+    }
+
+    private drawArrowsV2({
+        slot,
+        firstIdPair,
+        windingDirection,
+    }: DrawArrowsPropsType) {
+        if (windingDirection === "direct") {
+            this.drawWiringDirect({ slot, firstIdPair });
+        } else {
+            this.drawWiringReverse({ slot, firstIdPair });
+        }
+    }
+
+    private drawWiringDirect({ slot, firstIdPair }: DrawArrowByDirection) {
+        let firstElementIdNumber = Number(firstIdPair[0]);
+        let secondElementIdNumber = Number(firstIdPair[1]);
+
+        while (firstElementIdNumber <= slot) {
+            const firstElementId = `${this.SLOT_ID_TITLE_PART}${firstElementIdNumber}`;
+            const secondElementId = `${this.SLOT_ID_TITLE_PART}${secondElementIdNumber}`;
+
+            const { firstLabelElement, secondLabelElement } =
+                this.getSlotLabelElementsByIdList({
+                    firstElementId,
+                    secondElementId,
+                });
+
+            this.drawArrow(firstLabelElement, secondLabelElement);
+
+            firstElementIdNumber += 1;
+            secondElementIdNumber += 1;
+
+            if (secondElementIdNumber > slot) {
+                secondElementIdNumber = secondElementIdNumber - slot;
+            }
+        }
+    }
+
+    private drawWiringReverse({ slot, firstIdPair }: DrawArrowByDirection) {
+        let firstElementIdNumberV2 = Number(firstIdPair[1]);
+        let secondElementIdNumberV2 = Number(firstIdPair[0]);
+
+        while (secondElementIdNumberV2 <= slot) {
+            const firstElementId = `${this.SLOT_ID_TITLE_PART}${firstElementIdNumberV2}`;
+            const secondElementId = `${this.SLOT_ID_TITLE_PART}${secondElementIdNumberV2}`;
+
+            const { firstLabelElement, secondLabelElement } =
+                this.getSlotLabelElementsByIdList({
+                    firstElementId,
+                    secondElementId,
+                });
+
+            this.drawArrow(firstLabelElement, secondLabelElement);
+
+            firstElementIdNumberV2 += 1;
+            secondElementIdNumberV2 += 1;
+
+            if (firstElementIdNumberV2 > slot) {
+                firstElementIdNumberV2 = firstElementIdNumberV2 - slot;
+            }
+        }
     }
 
     public changeWiringStep({
@@ -43,72 +103,6 @@ export class WiringStep {
         document
             .querySelectorAll(this.ARROW_CLASSNAME)
             .forEach((element) => element.remove());
-    }
-
-    private drawArrows({
-        slot,
-        step,
-        firstIdPair,
-        windingDirection,
-    }: DrawArrowsPropsType) {
-        let firstElementId;
-        let secondElementId;
-
-        if (windingDirection === "reverse") {
-            firstElementId = `${this.SLOT_ID_TITLE_PART}${firstIdPair[1]}`;
-            secondElementId = `${this.SLOT_ID_TITLE_PART}${firstIdPair[0]}`;
-        } else {
-            firstElementId = `${this.SLOT_ID_TITLE_PART}${firstIdPair[0]}`;
-            secondElementId = `${this.SLOT_ID_TITLE_PART}${firstIdPair[1]}`;
-        }
-
-        const { firstLabelElement, secondLabelElement } =
-            this.getSlotLabelElementsByIdList({
-                firstElementId,
-                secondElementId,
-            });
-
-        this.drawArrow(firstLabelElement, secondLabelElement);
-
-        let count = 1;
-        let endLabelElementId = Number(firstIdPair[1]);
-
-        while (count < slot) {
-            const updatedEndLabelElementId = this.getNextElementId({
-                slot,
-                step,
-                endLabelElementId,
-            });
-
-            const { firstLabelElement, secondLabelElement } =
-                this.getSlotLabelElementsByIdList({
-                    firstElementId: `${this.SLOT_ID_TITLE_PART}${endLabelElementId}`,
-                    secondElementId: `${this.SLOT_ID_TITLE_PART}${updatedEndLabelElementId}`,
-                });
-
-            this.drawArrow(firstLabelElement, secondLabelElement);
-
-            count += 1;
-            endLabelElementId = updatedEndLabelElementId;
-        }
-    }
-
-    private getNextElementId({
-        slot,
-        step,
-        endLabelElementId,
-    }: {
-        slot: number;
-        step: number;
-        endLabelElementId: number;
-    }): number {
-        const nextElementId = endLabelElementId + step;
-
-        return nextElementId <= slot ? nextElementId : nextElementId - slot;
-    }
-
-    private getWiringStep(idList: string[]): number {
-        return Math.abs(Number(idList[0]) - Number(idList[1]));
     }
 
     private drawArrow(
@@ -158,7 +152,8 @@ type SpanElements = {
 
 type DrawArrowsPropsType = {
     slot: number;
-    step: number;
     firstIdPair: string[];
     windingDirection: WindingDirectionType;
 };
+
+type DrawArrowByDirection = Omit<DrawArrowsPropsType, "windingDirection">;

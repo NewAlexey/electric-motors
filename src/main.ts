@@ -19,6 +19,7 @@ class ElectricalMotorWiring {
             changeLamellaCount: () => this.changeLamellaCount(),
             changeSlotSectorLines: () => this.changeSlotSectorCount(),
             changeLamellasPosition: () => this.changeLamellasPosition(),
+            changeWindingDirection: () => this.changeWindingDirection(),
             changeWiringDirectionArrow: () => this.changeWiringDirectionArrow(),
         });
         this.drawSchema(this.Form.getFormValue());
@@ -54,6 +55,16 @@ class ElectricalMotorWiring {
     }
 
     private changeWiringStep() {
+        const { wiringStep, windingDirection, slot } = this.Form.getFormValue();
+
+        this.Schema.changeWiringStep({
+            wiringStep,
+            slot: Number(slot),
+            windingDirection: windingDirection as WindingDirectionType,
+        });
+    }
+
+    private changeWindingDirection() {
         const { wiringStep, windingDirection, slot } = this.Form.getFormValue();
 
         this.Schema.changeWiringStep({

@@ -79,6 +79,7 @@ export class Form {
         changeSlotSectorLines,
         changeLamellasPosition,
         changeWiringDirectionArrow,
+        changeWindingDirection,
     }: EventListenerProps) {
         const entries = Object.entries<SettingsValueType>(SETTING_ELEMENTS_IDS);
 
@@ -134,9 +135,7 @@ export class Form {
                         }
 
                         case "windingDirection": {
-                            console.log(
-                                "Function for change winding direction not implemented yet.",
-                            );
+                            changeWindingDirection();
 
                             break;
                         }
